@@ -25,7 +25,7 @@
     
     <title>Digital Personal Data Protection Act, 2023 | Government of India</title>
     <script src="cdn.tailwindcss.com"></script>
-    <script src="lucide.min.js"></script>
+    <script src="lucide@latest"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -117,15 +117,24 @@
             transform: rotate(-90deg);
         }
 
-        /* Toggle Switch */
-        .toggle-checkbox:checked {
-            right: 0;
-            border-color: #1e3a8a;
+        /* Hover Anchor Link */
+        .anchor-link {
+            opacity: 0;
+            transition: opacity 0.2s;
+            margin-left: 0.5rem;
+            color: #1e3a8a; /* india-blue */
+            text-decoration: none;
+            font-size: 0.7em;
+            vertical-align: middle;
         }
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: #1e3a8a;
+        .dark .anchor-link { color: #60a5fa; }
+        h2:hover .anchor-link, h3:hover .anchor-link { opacity: 1; }
+
+        /* Scroll margin for sticky headers */
+        section, article, .chapter-header {
+            scroll-margin-top: 6rem; /* Adjust based on header height */
         }
-        
+
         /* Print styles for official doc feel */
         @media print {
             .no-print { display: none; }
@@ -276,19 +285,34 @@
                 <!-- Content injected by JS -->
             </div>
             
-            <!-- Footer -->
-            <footer class="mt-20 pt-8 border-t border-slate-200 dark:border-slate-800 text-center">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Emblem" class="h-8 mx-auto mb-4 opacity-50 grayscale dark:invert">
-                <p class="text-slate-900 dark:text-slate-200 font-bold text-sm">Digital Personal Data Protection Act, 2023</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Ministry of Electronics and Information Technology</p>
-                <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-widest">Government of India</p>
-                <p class="text-[10px] text-slate-400 mt-4 opacity-75">This content is for educational purposes only. Refer to the official Gazette for legal authority.</p>
-            </footer>
+            <!-- OFFICIAL FOOTER (IN FLOW) -->
+            <div class="mt-20 pt-8 border-t border-slate-200 dark:border-slate-800 text-center pb-12">
+                <div class="mb-8">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Emblem" class="h-8 mx-auto mb-4 opacity-50 grayscale dark:invert">
+                    <p class="text-slate-900 dark:text-slate-200 font-bold text-sm">Digital Personal Data Protection Act, 2023</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Ministry of Electronics and Information Technology</p>
+                    <p class="text-[10px] text-slate-400 mt-1 uppercase tracking-widest">Government of India</p>
+                    <p class="text-[10px] text-slate-400 mt-4 opacity-75">This content is for educational purposes only. Refer to the official Gazette for legal authority.</p>
+                </div>
+            </div>
         </main>
     </div>
 
-    <!-- Scroll to Top -->
-    <button id="scroll-top" class="fixed bottom-6 right-6 p-3 rounded-full bg-india-blue text-white shadow-lg hover:bg-blue-800 transition-all transform translate-y-20 opacity-0 z-50 ring-2 ring-white dark:ring-slate-800">
+    <!-- FIXED THIN FOOTER (DESIGNER) -->
+    <footer class="fixed bottom-0 left-0 w-full z-50 bg-white/95 dark:bg-darker/95 backdrop-blur-sm border-t border-slate-200 dark:border-slate-800 py-2 px-4 md:px-8 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-500 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <div class="flex items-center gap-1">
+            <span>&copy; 2025</span>
+            <a href="https://www.aimaverick.me" target="_blank" rel="noopener noreferrer" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 hover:underline transition-colors font-medium">
+                @amsubhzd
+            </a>
+        </div>
+        <div class="italic">
+            Designed by <span class="font-semibold text-slate-600 dark:text-slate-400">AIMaverick</span>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top (Positioned above footer) -->
+    <button id="scroll-top" class="fixed bottom-12 right-6 p-3 rounded-full bg-india-blue text-white shadow-lg hover:bg-blue-800 transition-all transform translate-y-20 opacity-0 z-50 ring-2 ring-white dark:ring-slate-800">
         <i data-lucide="arrow-up" class="w-6 h-6"></i>
     </button>
 
@@ -494,7 +518,7 @@ Explanation.- For the purposes of this clause, the expression "disaster" shall h
                         id: "sec-8",
                         title: "8. General obligations of Data Fiduciary",
                         content: `(1) A Data Fiduciary shall, irrespective of any agreement to the contrary or failure of a Data Principal to carry out the duties provided under this Act, be responsible for complying with the provisions of this Act and the rules made thereunder in respect of any processing undertaken by it or on its behalf by a Data Processor.
-(2) A Data Fiduciary may engage, appoint, use or otherwise involve a Data Processor to process personal data on its behalf for any activity related to offering of goods or services to Data Principals only under a valid contract.
+(2) A Data Fiduciary may engage, appoint, use or otherwise involve a Data Processor to process personal data on its behalf for any activity related to offering of goods or services to Data Principals within the territory of India, only under a valid contract.
 (3) Where personal data processed by a Data Fiduciary is likely to be-
 (a) used to make a decision that affects the Data Principal; or
 (b) disclosed to another Data Fiduciary,
@@ -1055,11 +1079,13 @@ ASHWINI VAISHNAW.`,
                 if (matchingSections.length > 0) {
                     // Render Chapter Header in Content
                     const chapterEl = document.createElement('div');
-                    chapterEl.className = 'border-b border-slate-200 dark:border-slate-700 pb-8';
+                    chapterEl.id = chapter.id; // Added ID for Deep Linking
+                    chapterEl.className = 'chapter-header border-b border-slate-200 dark:border-slate-700 pb-8';
                     chapterEl.innerHTML = `
-                        <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 flex items-center gap-2 official-font tracking-tight">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 flex items-center gap-2 official-font tracking-tight group cursor-pointer">
                             <span class="bg-slate-100 dark:bg-slate-800 p-1 rounded text-base text-slate-500">§</span>
                             ${highlightText(chapter.title, lowerFilter)}
+                            <a href="#${chapter.id}" class="anchor-link" title="Copy link to chapter"><i data-lucide="link" class="w-4 h-4"></i></a>
                         </h2>
                         <div class="space-y-6"></div>
                     `;
@@ -1089,8 +1115,9 @@ ASHWINI VAISHNAW.`,
                         const contentDiv = document.createElement('div');
                         contentDiv.innerHTML = `
                             <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 group-hover:text-india-blue dark:group-hover:text-blue-400 transition-colors official-font">
+                                <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200 group-hover:text-india-blue dark:group-hover:text-blue-400 transition-colors official-font flex items-center">
                                     ${highlightText(section.title, lowerFilter)}
+                                    <a href="#${section.id}" class="anchor-link" title="Copy link to section"><i data-lucide="link" class="w-4 h-4"></i></a>
                                 </h3>
                                 ${isSimplified && section.simplified ? '<span class="text-[10px] uppercase tracking-wider font-bold text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-300 px-2 py-0.5 rounded">Simplified</span>' : ''}
                             </div>
@@ -1140,7 +1167,12 @@ ASHWINI VAISHNAW.`,
                         
                         link.onclick = (e) => {
                             e.preventDefault();
-                            document.getElementById(section.id).scrollIntoView({ behavior: 'smooth' });
+                            const target = document.getElementById(section.id);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                                // URL Update on Click
+                                history.pushState(null, null, `#${section.id}`);
+                            }
                             closeMobileMenu();
                         };
                         
@@ -1246,11 +1278,19 @@ ASHWINI VAISHNAW.`,
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Intersection Observer for Active TOC
+        // Intersection Observer for Active TOC & URL Updates
         function setupIntersectionObserver() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        
+                        // Update URL hash without adding to history stack (replaceState)
+                        // This prevents back button spam while scrolling
+                        if (history.replaceState && id) {
+                            history.replaceState(null, null, `#${id}`);
+                        }
+
                         // Remove active class from all links
                         document.querySelectorAll('.toc-link').forEach(link => {
                             link.classList.remove('text-india-blue', 'font-bold', 'bg-slate-100', 'dark:bg-slate-800', 'border-india-blue', 'dark:text-blue-400');
@@ -1258,7 +1298,7 @@ ASHWINI VAISHNAW.`,
                         });
                         
                         // Add active class to current link
-                        const activeLink = document.querySelector(`.toc-link[data-target="${entry.target.id}"]`);
+                        const activeLink = document.querySelector(`.toc-link[data-target="${id}"]`);
                         if (activeLink) {
                             activeLink.classList.remove('text-slate-600', 'dark:text-slate-400', 'border-transparent');
                             activeLink.classList.add('text-india-blue', 'font-bold', 'bg-slate-100', 'dark:bg-slate-800', 'border-india-blue', 'dark:text-blue-400');
@@ -1267,7 +1307,8 @@ ASHWINI VAISHNAW.`,
                 });
             }, { rootMargin: '-100px 0px -70% 0px' });
 
-            document.querySelectorAll('article').forEach(section => {
+            // Observe both Sections (Articles) and Chapter Headers
+            document.querySelectorAll('article, .chapter-header').forEach(section => {
                 observer.observe(section);
             });
         }
@@ -1276,6 +1317,18 @@ ASHWINI VAISHNAW.`,
         document.addEventListener('DOMContentLoaded', () => {
             applyTheme();
             renderContent();
+            
+            // Handle initial hash load if user arrives via a bookmark
+            if(window.location.hash) {
+                const id = window.location.hash.substring(1);
+                const element = document.getElementById(id);
+                if(element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }, 500); // Slight delay for rendering
+                }
+            }
+
             // Try initializing lucide if available immediately
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
