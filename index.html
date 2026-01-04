@@ -12,7 +12,7 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.meity.gov.in/content/digital-personal-data-protection-act-2023">
+    <meta property="og:url" content="https://dpdp.aimaverick.me">
     <meta property="og:title" content="Digital Personal Data Protection Act, 2023 | Government of India">
     <meta property="og:description" content="Official reference of the DPDP Act 2023 with simplified layman summaries. Access rights, penalties, and obligations for data processing in India.">
     <meta property="og:image" content="dpdp_og.png">
@@ -339,7 +339,7 @@
                         id: "sec-1",
                         title: "1. Short title and commencement",
                         content: `(1) This Act may be called the Digital Personal Data Protection Act, 2023.
-(2) It shall come into force on such date as the Central Government may, by notification in the Official Gazette, appoint and different dates may be appointed for different provisions of this Act and any reference in any such provision to the commencement of this Act shall be construed as a reference to the coming into force of that provision.
+(2) It shall come into force on such date as the Central Government may, by notification, appoint and different dates may be appointed for different provisions of this Act and any reference in any such provision to the commencement of this Act shall be construed as a reference to the coming into force of that provision.
 
 <strong>Footnote *1:</strong> 13th November, 2025-Ss. 2, 18 to 26, 35 to 43 and sub-section (1) and (3) of s. 44;
 One year from 13th November, 2025-Sub-section (9) of s. 6 and clause (d) of sub-section (1) of s. 27;
@@ -1049,7 +1049,8 @@ ASHWINI VAISHNAW.`,
         const urlParams = new URLSearchParams(window.location.search);
         let isSimplified = urlParams.get('mode') !== 'official'; 
         
-        let expandedChapters = new Set(['prelims', 'chapter-1', 'chapter-2']);
+        // Populate all chapters as expanded by default
+        let expandedChapters = new Set(actData.map(item => item.id));
 
         function applyTheme() {
             if (isDark) {
